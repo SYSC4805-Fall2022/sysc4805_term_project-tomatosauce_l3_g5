@@ -60,21 +60,36 @@ int left(int frequency, double dutyCycle){
   // return counterRight;
 }
 void right(){
-  PWM->PWM_CH_NUM[0].PWM_CDTY = 42000000-1;
-  TC0->TC_CHANNEL[0].TC_RA =42000-1;
-  digitalWrite(left_side_dir_pin, HIGH);
-  digitalWrite(right_side_dir_pin, LOW);
+  int counterLeft = calculateCounterLeft(frequency)-1;
+  int counterRight = calculateCounterRight(frequency)-1;
+  PWM->PWM_CH_NUM[0].PWM_CPRD = counterLeft;
+  PWM->PWM_CH_NUM[0].PWM_CDTY = calculateDutyCycle(counterLeft, dutyCycle);
+  
+  TC0->TC_CHANNEL[0].TC_RC =  counterRight;
+  TC0->TC_CHANNEL[0].TC_RA = calculateDutyCycle(counterRight, dutyCycle); //Set the duty cycle (Pulse of 10 usec)
+  digitalWrite(left_side_dir_pin, LOW);
+  digitalWrite(right_side_dir_pin, HIGH);
 }
 void forward(){
-  PWM->PWM_CH_NUM[0].PWM_CDTY = 60000-1;
-  TC0->TC_CHANNEL[0].TC_RA =42000-1; //Set the duty cycle (Pulse of 10 usec)
+  int counterLeft = calculateCounterLeft(frequency)-1;
+  int counterRight = calculateCounterRight(frequency)-1;
+  PWM->PWM_CH_NUM[0].PWM_CPRD = counterLeft;
+  PWM->PWM_CH_NUM[0].PWM_CDTY = calculateDutyCycle(counterLeft, dutyCycle);
+  
+  TC0->TC_CHANNEL[0].TC_RC =  counterRight;
+  TC0->TC_CHANNEL[0].TC_RA = calculateDutyCycle(counterRight, dutyCycle); //Set the duty cycle (Pulse of 10 usec)
   digitalWrite(left_side_dir_pin, LOW);
   digitalWrite(right_side_dir_pin, LOW);
 }
 void backwards(){
   
-  PWM->PWM_CH_NUM[0].PWM_CDTY = 60000-1;
-  TC0->TC_CHANNEL[0].TC_RA =42000-1; //Set the duty cycle (Pulse of 10 usec)
+  int counterLeft = calculateCounterLeft(frequency)-1;
+  int counterRight = calculateCounterRight(frequency)-1;
+  PWM->PWM_CH_NUM[0].PWM_CPRD = counterLeft;
+  PWM->PWM_CH_NUM[0].PWM_CDTY = calculateDutyCycle(counterLeft, dutyCycle);
+  
+  TC0->TC_CHANNEL[0].TC_RC =  counterRight;
+  TC0->TC_CHANNEL[0].TC_RA = calculateDutyCycle(counterRight, dutyCycle); //Set the duty cycle (Pulse of 10 usec)
   digitalWrite(left_side_dir_pin, HIGH);
   digitalWrite(right_side_dir_pin, HIGH);
 }
