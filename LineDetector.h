@@ -42,10 +42,10 @@ int checkLine(){
   }
 
   if(count>1){
-    Line_flag = 1;
+   return 1;
     Serial.println("On Black line");
   }
 
-  return (int) Line_flag;
+  return 0;
   
 }
