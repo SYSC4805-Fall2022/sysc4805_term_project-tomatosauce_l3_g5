@@ -1,4 +1,6 @@
-#include "MotorControl.h"
+#include "Headers/MotorControl.h"
+#include "Headers/LineDetector.h"
+
 void setup() {
   Serial.begin(9600);
   setupMotorControl();

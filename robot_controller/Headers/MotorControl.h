@@ -59,7 +59,7 @@ int left(int frequency, double dutyCycle){
   digitalWrite(right_side_dir_pin, LOW);
   // return counterRight;
 }
-void right(){
+void right(int frequency, double dutyCycle){
   int counterLeft = calculateCounterLeft(frequency)-1;
   int counterRight = calculateCounterRight(frequency)-1;
   PWM->PWM_CH_NUM[0].PWM_CPRD = counterLeft;
@@ -70,7 +70,7 @@ void right(){
   digitalWrite(left_side_dir_pin, LOW);
   digitalWrite(right_side_dir_pin, HIGH);
 }
-void forward(){
+void forward(int frequency, double dutyCycle){
   int counterLeft = calculateCounterLeft(frequency)-1;
   int counterRight = calculateCounterRight(frequency)-1;
   PWM->PWM_CH_NUM[0].PWM_CPRD = counterLeft;
@@ -81,7 +81,7 @@ void forward(){
   digitalWrite(left_side_dir_pin, LOW);
   digitalWrite(right_side_dir_pin, LOW);
 }
-void backwards(){
+void backwards(int frequency, double dutyCycle){
 
   int counterLeft = calculateCounterLeft(frequency)-1;
   int counterRight = calculateCounterRight(frequency)-1;
