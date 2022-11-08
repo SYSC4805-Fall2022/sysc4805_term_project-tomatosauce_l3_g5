@@ -5,11 +5,10 @@
 int left_side_dir_pin = 7;
 int right_side_dir_pin = 6;
 int calculateCounterLeft(int frequency){
-  return (int)42000000/frequency;
-
+	return (int)1000000/frequency;
 }
 int calculateCounterRight(int frequency){
-  return (int)1000000/frequency;
+  return (int)42000000/frequency;
 }
 int calculateDutyCycle(int counter, double dutyCycle){
   return (int)((double)dutyCycle*counter);
