@@ -20,7 +20,7 @@ int checkObstacle(){
 
   }else{
     Serial.println(" Obstacle");
-    return 1
+    return 1;
   }
 
   
