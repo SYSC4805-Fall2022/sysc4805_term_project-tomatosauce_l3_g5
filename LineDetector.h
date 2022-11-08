@@ -9,7 +9,7 @@ pinMode(Right, INPUT);
 Serial.begin(9600);
 }
 
-void checkLine(){
+int checkLine(){
   String l;
   String r;
   String m;
