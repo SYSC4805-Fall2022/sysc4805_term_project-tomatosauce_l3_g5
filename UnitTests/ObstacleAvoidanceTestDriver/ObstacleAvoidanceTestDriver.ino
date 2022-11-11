@@ -1,21 +1,13 @@
-#include <Gyro.h>
-#include <LineDetector.h>
-#include <MotorControl.h>
-#include <ObstacleDetecter.h>
+//#include <Gyro.h>
+#include <LRObsSensors.hpp>
 
 void setup() {
-  setupMotorControl();
-  setupObstacleDetecter();
-  forward(17, 0.8);
+ Serial.begin(115200);
+ LRObsSensorssetup();
+
 }
 
 void loop() {
-  if(checkObstacle()==1){
-    stop();
-    while(true){
-
-    }
-    
-  }
-
+  Serial.println(checkLeftRight());
+  delay(1000);
 }
