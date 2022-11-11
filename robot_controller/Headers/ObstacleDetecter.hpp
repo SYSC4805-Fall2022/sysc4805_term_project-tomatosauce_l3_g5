@@ -1,4 +1,4 @@
-//The max distance is 8cm
+#include <Arduino.h>
 int ledPin = 13;
 int inPin = 8;
 int obs = 0;

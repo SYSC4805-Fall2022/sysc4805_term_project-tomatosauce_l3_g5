@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <Wire.h>
 #include <LSM6.h>
 LSM6 imu;
