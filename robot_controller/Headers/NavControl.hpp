@@ -1,9 +1,8 @@
-#include <Arduino.h>
 
 using namespace std;
 
 int x;
-enum State{IDLE=0, NAVIGATE, AVOID_OBSTACLE, REROUTE, AT_EDGE};
+enum State{IDLE=0, NAVIGATE, AVOID_OBSTACLE, REROUTE, AT_EDGE, INVALID};
 enum Inputs{START=0, FORWARD_OBSTACLE, RIGHT_OBSTACLE, LEFT_OBSTACLE, OBSTACLE_AVOIDED, EDGE_DETECTED, REROUTE_COMPLETE};
 State updateState(State currentState, Inputs input){
 	switch(currentState){
@@ -30,7 +29,7 @@ State updateState(State currentState, Inputs input){
 			}
 				
 		default:
-			return -1;
+			return INVALID;
 		
 	}
 	
