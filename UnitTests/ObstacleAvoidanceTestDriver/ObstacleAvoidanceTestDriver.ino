@@ -1,6 +1,8 @@
-#include "Headers/MotorControl.h"
-#include "Headers/LineDetector.h"
-#include "Headers/ObstacleDetecter.h"
+#include <Gyro.h>
+#include <LineDetector.h>
+#include <MotorControl.h>
+#include <ObstacleDetecter.h>
+
 void setup() {
   setupMotorControl();
   setupObstacleDetecter();
