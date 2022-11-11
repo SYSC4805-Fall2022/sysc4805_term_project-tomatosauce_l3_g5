@@ -51,6 +51,20 @@ void LRObsSensorssetup()
   }
 }
 
+
+int leftSensor(){
+  int l =1;
+  l=sensors[0].read();
+  return l;
+}
+
+int rightSensor(){
+  int r =1;
+  r=sensors[1].read();
+  return r;
+}
+
+
 int checkLeftRight()
 {
 
