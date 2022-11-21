@@ -1,7 +1,5 @@
+#include <string>
 
-using namespace std;
-
-int x;
 enum State{IDLE=0, NAVIGATE, AVOID_OBSTACLE, REROUTE, AT_EDGE, INVALID};
 enum Inputs{START=0, FORWARD_OBSTACLE, RIGHT_OBSTACLE, LEFT_OBSTACLE, OBSTACLE_AVOIDED, EDGE_DETECTED, REROUTE_COMPLETE};
 State updateState(State currentState, Inputs input){
@@ -33,4 +31,26 @@ State updateState(State currentState, Inputs input){
 		
 	}
 	
+}
+std::string stateToString(State state){
+	switch(state){
+		case State::IDLE: return "IDLE";
+		case State::NAVIGATE: return "NAVIGATE";
+		case State::AVOID_OBSTACLE: return "AVOID_OBSTACLE";
+		case State::AT_EDGE: return "AT_EDGE";
+		case State::REROUTE: return "REROUTE";
+		default: return "INVALID";
+	}
+}
+std::string inputToString(Inputs input){
+	switch(input){
+		case Inputs::START: return "START";
+		case Inputs::FORWARD_OBSTACLE: return "FORWARD_OBSTACLE";
+		case Inputs::RIGHT_OBSTACLE: return "RIGHT_OBSTACLE";
+		case Inputs::LEFT_OBSTACLE: return "LEFT_OBSTACLE";
+		case Inputs::OBSTACLE_AVOIDED: return "OBSTACLE_AVOIDED";
+		case Inputs::EDGE_DETECTED: return "EDGE_DETECTED";
+		case Inputs::REROUTE_COMPLETE: return "REROUTE_COMPLETE";
+		default: return "INVALID";
+	}
 }
