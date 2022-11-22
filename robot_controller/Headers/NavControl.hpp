@@ -1,7 +1,7 @@
 #include <string>
-
+#include "inputs.h"
 enum State{IDLE=0, NAVIGATE, AVOID_OBSTACLE, REROUTE, AT_EDGE, INVALID};
-enum Inputs{START=0, FORWARD_OBSTACLE, RIGHT_OBSTACLE, LEFT_OBSTACLE, OBSTACLE_AVOIDED, EDGE_DETECTED, REROUTE_COMPLETE};
+
 State updateState(State currentState, Inputs input){
 	switch(currentState){
 		case State::IDLE:

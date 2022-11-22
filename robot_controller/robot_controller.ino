@@ -1,5 +1,5 @@
-#include "Headers/MotorControl.h"
-#include "Headers/LineDetector.h"
+#include "Headers/MotorControl.hpp"
+#include "Headers/LineDetector.hpp"
 
 void setup() {
   Serial.begin(9600);
