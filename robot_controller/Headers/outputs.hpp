@@ -1,3 +1,5 @@
+#ifndef OUTPUTS_HPP
+#define OUTPUTS_HPP
 #include <string>
 enum class Outputs{START_NAVIGATION=0, START_OBSTACLE_AVOIDANCE, START_REROUTE, START_EDGE_DETECTED, TURN_LEFT, TURN_RIGHT, STOP, FORWARD, REROUTE_COMPLETE, OBSTACLE_AVOIDED, NONE};
 
@@ -15,3 +17,4 @@ std::string outputToString(Outputs output){
 		default: return "INVALID";
 	}
 }
+#endif

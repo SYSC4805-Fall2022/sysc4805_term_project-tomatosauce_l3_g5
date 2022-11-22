@@ -1,3 +1,5 @@
+#ifndef LROBS_SENSORS_HPP
+#define LROBS_SENSORS_HPP
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -88,3 +90,4 @@ int checkLeftRight()
   return 0;
 
 }
+#endif

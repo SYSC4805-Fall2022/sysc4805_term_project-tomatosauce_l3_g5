@@ -1,3 +1,6 @@
+#ifndef LINE_DETECTOR_HPP
+#define LINE_DETECTOR_HPP
+
 #include <Arduino.h>
 int Left = 8;
 int Middle = 9;
@@ -50,3 +53,4 @@ int checkLine(){
   return 0;
   
 }
+#endif

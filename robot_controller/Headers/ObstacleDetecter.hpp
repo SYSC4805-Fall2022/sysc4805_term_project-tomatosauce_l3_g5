@@ -1,3 +1,7 @@
+#ifndef OBSTACLE_DETECTER_HPP
+#define OBSTACLE_DETECTER_HPP
+
+
 #include <Arduino.h>
 int ledPin = 13;
 int inPin = 8;
@@ -25,3 +29,4 @@ int checkObstacle(){
 
   
 }
+#endif

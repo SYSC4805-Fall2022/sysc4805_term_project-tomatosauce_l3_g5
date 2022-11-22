@@ -1,3 +1,6 @@
+#ifndef REROUTE_HPP
+#define REROUTE_HPP
+
 #include <string>
 #include <stack>
 
@@ -8,7 +11,7 @@ class Reroute{
 	public:
 	enum State{IDLE = 0, START_OBSTACLE_AVOIDANCE, WAIT_FOR_OBSTACLE_AVOIDANCE, WAIT_TO_TURN, TURN_RIGHT, TURN_LEFT };
 	State currentState;
-	Output output;
+	Outputs output;
 	Reroute(){
 		currentState = State::IDLE;
 		output = Outputs::NONE;
@@ -68,3 +71,5 @@ class Reroute{
 	AvoidObstacle avoidObstacle;
 	Outputs nextTurn;
 }
+
+#endif

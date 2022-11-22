@@ -1,3 +1,6 @@
+#ifndef NAV_CONTROL_HPP
+#define NAV_CONTROL_HPP
+
 #include <string>
 #include "inputs.h"
 enum State{IDLE=0, NAVIGATE, AVOID_OBSTACLE, REROUTE, AT_EDGE, INVALID};
@@ -54,3 +57,4 @@ std::string inputToString(Inputs input){
 		default: return "INVALID";
 	}
 }
+#endif

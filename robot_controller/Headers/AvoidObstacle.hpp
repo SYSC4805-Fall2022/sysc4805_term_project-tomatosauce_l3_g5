@@ -1,3 +1,6 @@
+#ifndef AVOID_OBSTACLE_HPP
+#define AVOID_OBSTACLE_HPP
+
 #include <string>
 #include "inputs.hpp"
 #include "outputs.hpp"
@@ -55,3 +58,4 @@ class AvoidObstacle{
 			}
 		}
 };
+#endif
