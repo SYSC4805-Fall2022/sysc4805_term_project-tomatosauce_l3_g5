@@ -32,13 +32,13 @@ class AvoidObstacle{
 				case State::TURN_LEFT:
 					if(input == Inputs::TURN_COMPLETE){
 						currentState = State::IDLE;
-						output = Outputs::STOP;
+						output = Outputs::OBSTACLE_AVOIDED;
 					}
 					break;
 				case State::TURN_RIGHT:
 					if(input == Inputs::TURN_COMPLETE){
 						currentState = State::IDLE;
-						output = Outputs::STOP;
+						output = Outputs::OBSTACLE_AVOIDED;
 					}
 					break;
 					
