@@ -13,6 +13,8 @@ std::string outputToString(Outputs output){
 		case Outputs::TURN_RIGHT: return "TURN_RIGHT";
 		case Outputs::STOP: return "STOP";
 		case Outputs::OBSTACLE_AVOIDED: return "OBSTACLE_AVOIDED";
+		case Outputs::REROUTE_COMPLETE: return "REROUTE_COMPLETE";
+		case Outputs::FORWARD: return "FORWARD";
 		case Outputs::NONE: return "NONE";
 		default: return "INVALID";
 	}
