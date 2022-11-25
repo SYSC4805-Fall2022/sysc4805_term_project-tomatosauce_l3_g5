@@ -16,39 +16,39 @@ class EdgeDetected{
 		currentState = State::IDLE;
 		output = Outputs::NONE;
 	}
-	void newInput(std::list<Inputs> inputs){
+	void newInput(std::list<Input> inputs){
 		switch(currentState){
 			case State::IDLE:
 				if(contains(inputs, Input::START_EDGE_DETECTED)){
-					output = outputs::CHOOSE_DIRECTION;
+					output = Outputs::CHOOSE_DIRECTION;
 					currentState = State::CHOOSE_DIRECTION;
 				}
 				break;
 			case State::CHOOSE_DIRECTION:
-				if(contains(inputs, Input::PREFERRED_DIRECTION_RIGHT) && !contains(Input::RIGHT_OBSTACLE)){
+				if(contains(inputs, Input::PREFERRED_DIRECTION_RIGHT) && !contains(inputs,Input::RIGHT_OBSTACLE)){
 					turnLeft = false;
-					output = outputs::TURN_RIGHT;
+					output = Outputs::TURN_RIGHT;
 					currentState = State::TURN_RIGHT;
-				}else if(contains(inputs, Input::PREFERRED_DIRECTION_LEFT) && !contains(Input::LEFT_OBSTACLE)){
+				}else if(contains(inputs, Input::PREFERRED_DIRECTION_LEFT) && !contains(inputs, Input::LEFT_OBSTACLE)){
 					turnLeft = true;
-					output = outputs::TURN_LEFT;
+					output = Outputs::TURN_LEFT;
 					currentState = State::TURN_LEFT;
 				}
 				break;	
 			case State::TURN_LEFT:
 				if(contains(inputs, Input::TURN_COMPLETE)){
-					output = outputs::FORWARD;
+					output = Outputs::FORWARD;
 					currentState = State::FORWARD;
 				}
 				break;
 			case State::TURN_RIGHT:
 				if(contains(inputs, Input::TURN_COMPLETE)){
-					output = outputs::FORWARD;
+					output = Outputs::FORWARD;
 					currentState = State::FORWARD;
 				}
 				break;
 			case State::FORWARD:
-				if(contains(inputs, Input::STOP){
+				if(contains(inputs, Input::DELAY_COMPLETE)){
 					if(turnLeft){
 						output = Outputs::TURN_LEFT;
 						currentState = State::TURN_LEFT_AGAIN;
@@ -60,13 +60,13 @@ class EdgeDetected{
 				break;
 			case State::TURN_LEFT_AGAIN:
 				if(contains(inputs, Input::TURN_COMPLETE)){
-					output = outputs::EDGE_DETECTED_COMPLETE;
+					output = Outputs::EDGE_DETECTED_COMPLETE;
 					currentState = State::IDLE;
 				}
 				break;
 			case State::TURN_RIGHT_AGAIN:
 				if(contains(inputs, Input::TURN_COMPLETE)){
-					output = outputs::EDGE_DETECTED_COMPLETE;
+					output = Outputs::EDGE_DETECTED_COMPLETE;
 					currentState = State::IDLE;
 				}
 				break;
@@ -90,3 +90,5 @@ class EdgeDetected{
 	}
 	private:
 		bool turnLeft;
+};
+#endif

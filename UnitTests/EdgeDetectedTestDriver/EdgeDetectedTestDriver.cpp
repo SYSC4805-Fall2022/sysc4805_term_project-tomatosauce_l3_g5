@@ -3,6 +3,7 @@
 #include "../../robot_controller/Headers/Outputs.hpp"
 
 #include <iostream>
+
 using namespace std;
 int main(){
 	cout << "Unit Test for EdgeDetected";
@@ -21,8 +22,8 @@ int main(){
 	edgeDetected.newInput({Input::TURN_COMPLETE});
 	cout << " Output: " << outputToString(edgeDetected.output) <<" State: " << edgeDetected.stateToString();
 	
-	cout << endl << "Input: STOP";
-	edgeDetected.newInput({Input::STOP});
+	cout << endl << "Input: DELAY_COMPLETE";
+	edgeDetected.newInput({Input::DELAY_COMPLETE});
 	cout << " Output: " << outputToString(edgeDetected.output) <<" State: " << edgeDetected.stateToString();
 	
 	cout << endl << "Input: TURN_COMPLETE";

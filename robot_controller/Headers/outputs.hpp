@@ -16,6 +16,8 @@ std::string outputToString(Outputs output){
 		case Outputs::REROUTE_COMPLETE: return "REROUTE_COMPLETE";
 		case Outputs::FORWARD: return "FORWARD";
 		case Outputs::NONE: return "NONE";
+		case Outputs::CHOOSE_DIRECTION: return "CHOOSE_DIRECTION";
+		case Outputs::EDGE_DETECTED_COMPLETE: return "EDGE_DETECTED_COMPLETE";
 		default: return "INVALID";
 	}
 }
