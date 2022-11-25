@@ -17,11 +17,12 @@ class Reroute{
 		currentState = State::IDLE;
 		output = Outputs::NONE;
 	}
-	void newInput(Inputs input){
+	void newInput(std::list<Input> input){
 		switch(currentState){
 			case State::IDLE:
-				if(input == Inputs::START_REROUTE){
-					avoidObstacle.newInput(Inputs::START_OBSTACLE_AVOIDANCE);
+				output = Outputs::NONE;
+				if(contains(input, Input::START_REROUTE)){
+					avoidObstacle.newInput({Input::START_OBSTACLE_AVOIDANCE});
 					currentState = State::WAIT_FOR_OBSTACLE_AVOIDANCE;
 				}
 				break;
@@ -39,24 +40,24 @@ class Reroute{
 			case State::WAIT_TO_TURN:
 				
 				nextTurnLeft = turns.top();
-				if(nextTurnLeft && input != Inputs::LEFT_OBSTACLE && input != Inputs::FORWARD_OBSTACLE){
+				if(nextTurnLeft && !contains(input, Input::LEFT_OBSTACLE) && !contains(input, Input::FORWARD_OBSTACLE)){
 					turns.pop();
 					output = Outputs::TURN_LEFT;
 					currentState = State::TURN_LEFT;
 					
-				}else if(!nextTurnLeft && input != Inputs::RIGHT_OBSTACLE && input != Inputs::FORWARD_OBSTACLE){
+				}else if(!nextTurnLeft && !contains(input, Input::RIGHT_OBSTACLE) && !contains(input, Input::FORWARD_OBSTACLE)){
 					turns.pop();
 					output = Outputs::TURN_RIGHT;
 					currentState = State::TURN_RIGHT;
-				}else if(input == Inputs::FORWARD_OBSTACLE){
-					avoidObstacle.newInput(Inputs::START_OBSTACLE_AVOIDANCE);
+				}else if(contains(input, Input::FORWARD_OBSTACLE)){
+					avoidObstacle.newInput({Input::START_OBSTACLE_AVOIDANCE});
 					currentState = State::WAIT_FOR_OBSTACLE_AVOIDANCE;
 				}
 				break;
 			
 			case State::TURN_RIGHT:
 			case State::TURN_LEFT:
-				if(input == Inputs::TURN_COMPLETE){
+				if(contains(input, Input::TURN_COMPLETE)){
 					if(!turns.empty()){
 						output = Outputs::FORWARD;
 						currentState = State::WAIT_TO_TURN;

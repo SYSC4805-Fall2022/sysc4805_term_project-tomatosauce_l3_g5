@@ -2,6 +2,7 @@
 #define AVOID_OBSTACLE_HPP
 
 #include <string>
+#include <list>
 #include "inputs.hpp"
 #include "outputs.hpp"
 
@@ -16,30 +17,30 @@ class AvoidObstacle{
 			output = Outputs::NONE;
 		}
 		
-		void newInput(Inputs input){
+		void newInput(std::list<Input> inputs){
 			switch(currentState){
 				case State::IDLE:
-					if(input == Inputs::START_OBSTACLE_AVOIDANCE){
+					if(contains(inputs, Input::START_OBSTACLE_AVOIDANCE)){
 						currentState = State::CHOOSE_DIRECTION;
 					}
 					break;
 				case State::CHOOSE_DIRECTION:
-					if(input != Inputs::LEFT_OBSTACLE){
+					if(!contains(inputs,Input::LEFT_OBSTACLE)){
 						currentState = State::TURN_LEFT;
 						output = Outputs::TURN_LEFT;
-					}else if(input == Inputs::LEFT_OBSTACLE){
+					}else if(contains(inputs, Input::LEFT_OBSTACLE)){
 						currentState = State::TURN_RIGHT;
 						output = Outputs::TURN_RIGHT;
 					}
 					break;
 				case State::TURN_LEFT:
-					if(input == Inputs::TURN_COMPLETE){
+					if(contains(inputs, Input::TURN_COMPLETE)){
 						currentState = State::IDLE;
 						output = Outputs::OBSTACLE_AVOIDED;
 					}
 					break;
 				case State::TURN_RIGHT:
-					if(input == Inputs::TURN_COMPLETE){
+					if(contains(inputs, Input::TURN_COMPLETE)){
 						currentState = State::IDLE;
 						output = Outputs::OBSTACLE_AVOIDED;
 					}
