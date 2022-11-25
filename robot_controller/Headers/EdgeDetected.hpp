@@ -16,7 +16,7 @@ class EdgeDetected{
 		currentState = State::IDLE;
 		output = Outputs::NONE;
 	}
-	void newInput(std::list<Input> inputs){
+	void newInput(Input inputs []){
 		switch(currentState){
 			case State::IDLE:
 				if(contains(inputs, Input::START_EDGE_DETECTED)){
