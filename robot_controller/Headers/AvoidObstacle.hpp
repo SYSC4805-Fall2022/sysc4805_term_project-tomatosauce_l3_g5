@@ -26,7 +26,7 @@ class AvoidObstacle{
 					if(!contains(inputs,Input::LEFT_OBSTACLE)){
 						currentState = State::TURN_LEFT;
 						output = Outputs::TURN_LEFT;
-					}else if(contains(inputs, Input::LEFT_OBSTACLE)){
+					}else{
 						currentState = State::TURN_RIGHT;
 						output = Outputs::TURN_RIGHT;
 					}
