@@ -16,7 +16,7 @@ VL53L1X sensors[sensorCount];
 void LRObsSensorssetup()
 {
   while (!Serial) {}
-  Serial.begin(115200);
+  Serial.begin(9600);
   Wire.begin();
   Wire.setClock(400000); // use 400 kHz I2C
 
@@ -66,7 +66,14 @@ int rightSensor(){
   return r;
 }
 
-
+bool obstacleLeft(){
+	int l=sensors[0].read();
+	return l<200;
+}
+bool obstacleRight(){
+	int r = sensors[1].read();
+	return r<200;
+}
 int checkLeftRight()
 {
 

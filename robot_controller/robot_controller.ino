@@ -5,65 +5,69 @@
 #include "Headers/inputs.hpp"
 #include "Headers/outputs.hpp"
 
-#include "Headers/EdgeDetected.hpp"
 #include "Headers/LRObsSensors.hpp"
 #include "Headers/MotorControl.hpp"
-#include "Headers/LineDetector.hpp"
+#include "Headers/ObstacleDetecter.hpp"
+
+#include "Headers/AvoidObstacle.hpp"
 
 #include <string>
 using namespace std;
 
-EdgeDetected edgeDetected;
+AvoidObstacle avoidObstacle;
+
 Input inputs[15] = {Input::NONE};
 void setup() {
   Serial.begin(9600);
+  //setupObstacleDetecter();
+  LRObsSensorssetup();
   setupMotorControl();
-  setupLineDetector();
+  //setupLineDetector();
  
 }
 
 void loop() {
   //delay(1000);
   Serial.print("STATE: ");
-  Serial.println(edgeDetected.stateToString());
+  Serial.println(avoidObstacle.stateToString());
   //Poll Sensors
-  if(checkLine()){
-	  inputs[(int)(Input::START_EDGE_DETECTED)] = Input::START_EDGE_DETECTED;
+  // if(checkObstacle()){
+	//   inputs[(int)(Input::START_OBSTACLE_AVOIDANCE)] = Input::START_OBSTACLE_AVOIDANCE;
+  // }
+  Serial.println(leftSensor());
+  if(obstacleLeft()){
+    inputs[(int)Input::START_OBSTACLE_AVOIDANCE] = Input::START_OBSTACLE_AVOIDANCE;
   }
-  /**if(leftSensor()){
-    inputs[(int)Input::LEFT_OBSTACLE] = Input::LEFT_OBSTACLE;
-  }
-  if(rightSensor()){
+  if(obstacleRight()){
     inputs[(int)Input::RIGHT_OBSTACLE] = Input::RIGHT_OBSTACLE;
-  }**/
+  }
 
   //Update State
-  edgeDetected.newInput(inputs);
+  avoidObstacle.newInput(inputs);
 
   //Reset inputs
-  *inputs = {Input::NONE};
-
+  
+  for(int i = 0; i<15; i++){
+    inputs[i] = Input::NONE;
+  }
+  Serial.println();
   //Get outputs and update inputs
-  switch(edgeDetected.output){
-	  case Outputs::CHOOSE_DIRECTION:
-      inputs[(int)(Input::PREFERRED_DIRECTION_LEFT)] = Input::PREFERRED_DIRECTION_LEFT;
+  switch(avoidObstacle.output){
+    case Outputs::TURN_RIGHT:
+      right(17, 1);
+      delay(1000);
+      inputs[(int)(Input::TURN_COMPLETE)] = Input::TURN_COMPLETE;
       break;
     case Outputs::TURN_LEFT:
       left(17, 1);
       delay(1000);
-      inputs[(int)(Input::TURN_COMPLETE)] = Input::TURN_COMPLETE;
-      break;
-    case Outputs::FORWARD_ONE_STEP:
-      forward(17, 1);
-      delay(1000);
       stop();
-      inputs[(int)(Input::DELAY_COMPLETE)]= Input::DELAY_COMPLETE;
+      inputs[(int)(Input::DELAY_COMPLETE)]= Input::TURN_COMPLETE;
       break;
-    case Outputs::EDGE_DETECTED_COMPLETE:
-      while(true);
+    case Outputs::OBSTACLE_AVOIDED:
       break;
-	  default:
-		  break;
+	default:
+		break;
   }
   //Serial.print("Output: ");
   //Serial.println(outputToString(edgeDetected.output));

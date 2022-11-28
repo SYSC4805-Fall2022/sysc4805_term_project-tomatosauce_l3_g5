@@ -1,8 +1,6 @@
 #ifndef AVOID_OBSTACLE_HPP
 #define AVOID_OBSTACLE_HPP
 
-#include <string>
-#include <list>
 #include "inputs.hpp"
 #include "outputs.hpp"
 
@@ -17,7 +15,7 @@ class AvoidObstacle{
 			output = Outputs::NONE;
 		}
 		
-		void newInput(std::list<Input> inputs){
+		void newInput(Input inputs[]){
 			switch(currentState){
 				case State::IDLE:
 					if(contains(inputs, Input::START_OBSTACLE_AVOIDANCE)){
@@ -49,7 +47,7 @@ class AvoidObstacle{
 			    default:break;
 			}
 		}
-		std::string stateToString(){
+		const char* stateToString(){
 			switch(currentState){
 				case State::IDLE: return "IDLE";
 				case State::CHOOSE_DIRECTION: return "CHOOSE_DIRECTION";
