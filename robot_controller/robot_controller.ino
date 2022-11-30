@@ -2,21 +2,15 @@
 #define ROBOT_CONTROLLER_INO
 
 
-#include "Headers/inputs.hpp"
-#include "Headers/outputs.hpp"
-
 #include "Headers/LRObsSensors.hpp"
 #include "Headers/MotorControl.hpp"
 #include "Headers/ObstacleDetecter.hpp"
 #include "Headers/LineDetector.hpp"
-#include "Headers/AvoidObstacle.hpp"
 #include "LineDetectionControl.hpp"
 
-#include <string>
-using namespace std;
 void setup(){
   Serial.begin(9600);
-  setupMotorControl();
+  //setupMotorControl();
   setupLineDetector();
   ultaobssetup();
   LRObsSensorssetup();
@@ -24,20 +18,18 @@ void setup(){
 }
 void loop(){
   //forward(17, 1);
-  
+  delay(1000);
   int cl = checkLine();
-  //int ob = obscheck();
+  Serial.println(obscheck());
+  Serial.println("Left: "+leftSensor());
+  Serial.println("Right: "+rightSensor());
+  //Serial.println(obstacleLeft());
+ // Serial.println(obstacleRight());
 
   if(cl == 1){
     Serial.println("onLine");
-    // backwards(17,1);
-	  // stop();
-    // // delay(1000);
-    // // left(17, 1);
-    // // delay(1350);
-    // // stop();
-    // //
-	 onEdgeDetected();
+	 
+	  //onEdgeDetected();
     // return;
   }
 
