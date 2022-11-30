@@ -5,86 +5,113 @@
 #include "Headers/inputs.hpp"
 #include "Headers/outputs.hpp"
 
-//#include "Headers/LRObsSensors.hpp"
+#include "Headers/LRObsSensors.hpp"
 #include "Headers/MotorControl.hpp"
 #include "Headers/ObstacleDetecter.hpp"
-
+#include "Headers/LineDetector.hpp"
 #include "Headers/AvoidObstacle.hpp"
+#include "LineDetectionControl.hpp"
 
 #include <string>
 using namespace std;
-
-AvoidObstacle avoidObstacle;
-
-Input inputs[15] = {Input::NONE};
-void setup() {
+void setup(){
   Serial.begin(9600);
-  //setupObstacleDetecter();
-  //LRObsSensorssetup();
   setupMotorControl();
+  setupLineDetector();
   ultaobssetup();
- 
+  LRObsSensorssetup();
+	
 }
-
-void loop() {
-  // //delay(1000);
-  Serial.print("STATE: ");
-  Serial.println(avoidObstacle.stateToString());
-  //Poll Sensors
-  // if(checkObstacle()){
-	//   inputs[(int)(Input::START_OBSTACLE_AVOIDANCE)] = Input::START_OBSTACLE_AVOIDANCE;
-  // }
-  // Serial.println(leftSensor());
-  // if(obstacleLeft()){
-  //   inputs[(int)Input::LEFT_OBSTACLE] = Input::LEFT_OBSTACLE;
-  // }
-  // if(obstacleRight()){
-  //   inputs[(int)Input::RIGHT_OBSTACLE] = Input::RIGHT_OBSTACLE;
-  // }
-  int val = obscheck();
-  Serial.println(val);
-  if(val){
-    Serial.println("Obstacle Detected");
-	inputs[(int)Input::START_OBSTACLE_AVOIDANCE] = Input::START_OBSTACLE_AVOIDANCE;
-  }
-
-  //Update State
-  avoidObstacle.newInput(inputs);
-
-  //Reset inputs
+void loop(){
+  //forward(17, 1);
   
-  for(int i = 0; i<15; i++){
-    inputs[i] = Input::NONE;
-  }
-  //Get outputs and update inputs
-  switch(avoidObstacle.output){
-    case Outputs::TURN_RIGHT:
-      right(17, 1);
-      delay(1000);
-      inputs[(int)(Input::TURN_COMPLETE)] = Input::TURN_COMPLETE;
-      break;
-    case Outputs::TURN_LEFT:
-      left(17, 1);
-      delay(1000);
-      stop();
-      inputs[(int)(Input::DELAY_COMPLETE)]= Input::TURN_COMPLETE;
-      break;
-    case Outputs::OBSTACLE_AVOIDED:
-      break;
-	  default:
-		  break;
-  }
-  //Serial.print("Output: ");
-  //Serial.println(outputToString(edgeDetected.output));
-  // forward(17, 1);
-  // while(obscheck()){
+  int cl = checkLine();
+  //int ob = obscheck();
 
+  if(cl == 1){
+    Serial.println("onLine");
+    // backwards(17,1);
+	  // stop();
+    // // delay(1000);
+    // // left(17, 1);
+    // // delay(1350);
+    // // stop();
+    // //
+	 onEdgeDetected();
+    // return;
+  }
+
+  // if(obscheck()){
+  //   backwards(17, 1);
   //   stop();
+    
+  //   Serial.println("Detected");
+  //   obsDetected();
   //   while(true);
+  // }else{
+  //   Serial.println("Not detected");
   // }
-  // Serial.println(obscheck());
- 
-
+  //Serial.println(leftSensor());
+  
 }
+
+void obsDetected(){
+  int l =1;
+  int r=0;
+
+  l=sensors[0].read();
+ r=sensors[1].read(); 
+  Serial.println(r);
+  //Serial.println(r);
+  // if(r>l){
+  //   Serial.println("Turn Right");
+  //   right(17,1);
+  //   delay(1000);
+    //counter = counter + 1;
+
+    //counter++; c1
+
+     //l=sensors[0].read();
+    //  while(l<100){
+    //    forward(17, 0.8);
+    //    delay(1000);
+    //    stop();
+    //   // l=sensors[0].read();
+
+    //  }
+
+    //  forward(17, 0.8);
+    //  delay(2000);
+    //  stop();
+
+    //  left(17,0.8);
+    //  counter = counter - 1;
+    //  }
+
+    //  else{
+    //    Serial.println("TURN left");
+    //    left(17,1);
+    //    delay(1000);
+    //  }
+//}
+    //    //counter = counter - 1;
+    //    //r=sensors[1].read();
+    //    while(r<100){
+    //    forward(17, 0.8);
+    //    delay(1000);
+    //    stop();
+    //    //r=sensors[1].read();
+
+    //  }
+
+    //  forward(17, 0.8);
+    //  delay(2000);
+    //  stop();
+
+    //  right(17,0.8);
+    //  counter = counter - 1;
+ }
+
+
 
 #endif

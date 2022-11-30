@@ -39,16 +39,17 @@ int obscheck() {
   distance = (duration * 0.034 / 2); // Speed of sound wave divided by 2 (go and back)
   // Displays the distance on the Serial Monitor
 
-  if ((distance>14)&(distance < 25)){
-     
+  if ((distance>14)&(distance < 30)){
+     Serial.println(distance);
      return 1;
      //Serial.println(distance);
      //Serial.println("obstacle");
 
 
   }else{
+	Serial.println(distance);
     return 0;
-    //Serial.println(distance);
+    
     // Serial.println("NO");
   }
  // Serial.print("Distance: ");
