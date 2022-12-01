@@ -1,6 +1,6 @@
 #ifndef Line_Detection_Control_HPP
 #define Line_Detection_Control_HPP
-
+#include "constants.h"
 #include "MotorControl.hpp"
 #include <Arduino.h>
 
@@ -18,11 +18,11 @@ void onEdgeDetected(){
   }
 	if(previousTurnLeft){
 		right(17, 1);
-		delay(1350);
+		delay(TURN_TIME);
 		stop();
 	}else{
 		left(17, 1);
-		delay(1350);
+		delay(TURN_TIME);
 		stop();
 	}
 	forward(17, 1);
@@ -30,12 +30,12 @@ void onEdgeDetected(){
 	stop();
 	if(previousTurnLeft){
 		right(17, 1);
-		delay(1350);
+		delay(TURN_TIME);
 		previousTurnLeft = false;
 		stop();
 	}else{
 		left(17, 1);
-		delay(1350);
+		delay(TURN_TIME);
 		stop();
 		previousTurnLeft = true;
 		
