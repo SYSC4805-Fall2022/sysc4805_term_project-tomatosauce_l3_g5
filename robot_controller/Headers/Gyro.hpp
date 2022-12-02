@@ -1,3 +1,6 @@
+#ifndef GYRO_HPP
+#define GYRO_HPP
+#include <Arduino.h>
 #include <Wire.h>
 #include <LSM6.h>
 LSM6 imu;
@@ -31,3 +34,4 @@ void GYRO_Z(){
 Gz = ((int16_t)imu.g.z) * 8.75/1000;
 return Gz;
 }
+#endif
