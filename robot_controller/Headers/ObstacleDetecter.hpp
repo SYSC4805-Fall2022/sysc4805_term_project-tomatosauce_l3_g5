@@ -62,16 +62,23 @@ bool obscheck() {
 
 }
 bool obscheck2(){
-	digitalWrite(trigPin2, LOW);
-	delayMicroseconds(2);
-	digitalWrite(trigPin2, HIGH);
-	delayMicroseconds(10);
-	digitalWrite(trigPin2, LOW);
-	duration2 = pulseIn(echoPin2, HIGH);
-	distance2 = (duration2 * 0.034/2);
-	Serial.print("distance 2: ");
-  Serial.println(distance2);
-  if ((distance2>ULTRASONIC_LOWERBOUND)&(distance2 < ULTRASONIC_UPPERBOUND)){
+  digitalWrite(trigPin2, LOW);
+  delayMicroseconds(2);
+  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
+  digitalWrite(trigPin2, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin2, LOW);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn(echoPin2, HIGH);
+  // Calculating the distance
+  distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+  // Displays the distance on the Serial Monitor
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+	//Serial.print("distance 2: ");
+    //Serial.println(distance2);
+  if ((distance>ULTRASONIC_LOWERBOUND)&(ULTRASONIC_UPPERBOUND < 25)){
      
      return true;
 
