@@ -6,15 +6,26 @@
 //pin 35 is for PMC_PCER1_PID36
 int left_side_dir_pin = 7;
 int right_side_dir_pin = 6;
+/**
+Calculate the counter value for register at a specified frequency
+**/
 int calculateCounterLeft(int frequency){
 	return (int)1000000/frequency;
 }
+
+
 int calculateCounterRight(int frequency){
   return (int)42000000/frequency;
 }
+/**
+Calculate the counter for a duty cycle 
+**/
 int calculateDutyCycle(int counter, double dutyCycle){
   return (int)((double)dutyCycle*counter);
 }
+/**
+Enable registers, sets appropriate bits, and configure pins
+**/
 void setupMotorControl(){
 //direction pins
 pinMode(left_side_dir_pin, OUTPUT); 
@@ -48,55 +59,78 @@ TC0->TC_CHANNEL[0].TC_CMR = TC_CMR_TCCLKS_TIMER_CLOCK1 //MCK/2 = 42 MHz,
 | TC_CCR_CLKEN;//and enable  
 TC0->TC_CHANNEL[0].TC_CCR = TC_CCR_SWTRG | TC_CCR_CLKEN;//and enable   //Software trigger TC0 channel 0 counter
 }
+/**
+Turn left.
+@param frequency the frequency of the pwm signal for the motors
+@param dutyCycle the duty cycle range from 0 to 1 of the motors
+**/
 int left(int frequency, double dutyCycle){
   int counterLeft = calculateCounterLeft(frequency)-1;
   int counterRight = calculateCounterRight(frequency)-1;
   PWM->PWM_CH_NUM[0].PWM_CPRD = counterLeft;
-  PWM->PWM_CH_NUM[0].PWM_CDTY = calculateDutyCycle(counterLeft, dutyCycle);
+  PWM->PWM_CH_NUM[0].PWM_CDTY = calculateDutyCycle(counterLeft, dutyCycle); //Set the duty cycle of left motors
 
   TC0->TC_CHANNEL[0].TC_RC =  counterRight;
-  TC0->TC_CHANNEL[0].TC_RA = calculateDutyCycle(counterRight, dutyCycle); //Set the duty cycle (Pulse of 10 usec)
+  TC0->TC_CHANNEL[0].TC_RA = calculateDutyCycle(counterRight, dutyCycle); //Set the duty cycle of right motors
   digitalWrite(left_side_dir_pin, HIGH);
   digitalWrite(right_side_dir_pin, LOW);
   // return counterRight;
 }
+/**
+Turn Right.
+@param frequency the frequency of the pwm signal for the motors
+@param dutyCycle the duty cycle range from 0 to 1 of the motors
+**/
 void right(int frequency, double dutyCycle){
   int counterLeft = calculateCounterLeft(frequency)-1;
   int counterRight = calculateCounterRight(frequency)-1;
   PWM->PWM_CH_NUM[0].PWM_CPRD = counterLeft;
-  PWM->PWM_CH_NUM[0].PWM_CDTY = calculateDutyCycle(counterLeft, dutyCycle);
+  PWM->PWM_CH_NUM[0].PWM_CDTY = calculateDutyCycle(counterLeft, dutyCycle); //Set the duty cycle of left motors
 
   TC0->TC_CHANNEL[0].TC_RC =  counterRight;
-  TC0->TC_CHANNEL[0].TC_RA = calculateDutyCycle(counterRight, dutyCycle); //Set the duty cycle (Pulse of 10 usec)
+  TC0->TC_CHANNEL[0].TC_RA = calculateDutyCycle(counterRight, dutyCycle); //Set the duty cycle of right motors
   digitalWrite(left_side_dir_pin, LOW);
   digitalWrite(right_side_dir_pin, HIGH);
 }
+/**
+Go forward.
+@param frequency the frequency of the pwm signal for the motors
+@param dutyCycle the duty cycle range from 0 to 1 of the motors
+**/
 void forward(int frequency, double dutyCycle){
   int counterLeft = calculateCounterLeft(frequency)-1;
   int counterRight = calculateCounterRight(frequency)-1;
   PWM->PWM_CH_NUM[0].PWM_CPRD = counterLeft;
-  PWM->PWM_CH_NUM[0].PWM_CDTY = calculateDutyCycle(counterLeft, dutyCycle);
+  PWM->PWM_CH_NUM[0].PWM_CDTY = calculateDutyCycle(counterLeft, dutyCycle); //Set the duty cycle of left motors
 
   TC0->TC_CHANNEL[0].TC_RC =  counterRight;
-  TC0->TC_CHANNEL[0].TC_RA = calculateDutyCycle(counterRight, dutyCycle); //Set the duty cycle (Pulse of 10 usec)
+  TC0->TC_CHANNEL[0].TC_RA = calculateDutyCycle(counterRight, dutyCycle); //Set the duty cycle of right motors
   digitalWrite(left_side_dir_pin, LOW);
   digitalWrite(right_side_dir_pin, LOW);
 }
+/**
+Go backwards.
+@param frequency the frequency of the pwm signal for the motors
+@param dutyCycle the duty cycle range from 0 to 1 of the motors
+**/
 void backwards(int frequency, double dutyCycle){
 
   int counterLeft = calculateCounterLeft(frequency)-1;
   int counterRight = calculateCounterRight(frequency)-1;
   PWM->PWM_CH_NUM[0].PWM_CPRD = counterLeft;
-  PWM->PWM_CH_NUM[0].PWM_CDTY = calculateDutyCycle(counterLeft, dutyCycle);
+  PWM->PWM_CH_NUM[0].PWM_CDTY = calculateDutyCycle(counterLeft, dutyCycle);//Set the duty cycle of left motors
 
   TC0->TC_CHANNEL[0].TC_RC =  counterRight;
-  TC0->TC_CHANNEL[0].TC_RA = calculateDutyCycle(counterRight, dutyCycle); //Set the duty cycle (Pulse of 10 usec)
+  TC0->TC_CHANNEL[0].TC_RA = calculateDutyCycle(counterRight, dutyCycle); //Set the duty cycle of right motors
   digitalWrite(left_side_dir_pin, HIGH);
   digitalWrite(right_side_dir_pin, HIGH);
 }
+/**
+Stop the robot.
+**/
 void stop(){
-  PWM->PWM_CH_NUM[0].PWM_CDTY = 0;
-  TC0->TC_CHANNEL[0].TC_RA =1; //Set the duty cycle (Pulse of 10 usec)
+  PWM->PWM_CH_NUM[0].PWM_CDTY = 0; //Set duty cycle to 0
+  TC0->TC_CHANNEL[0].TC_RA =1; //Set the duty cycle to 0
 
 }
 #endif
