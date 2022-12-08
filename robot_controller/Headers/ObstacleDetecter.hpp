@@ -23,7 +23,9 @@ long duration2;
 int distance; // variable for the distance measurement
 int distance2;
 
-
+/**
+	setup pins for ultrasonic sensors
+**/
 void ultaobssetup() {
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
   pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
@@ -32,6 +34,9 @@ void ultaobssetup() {
   Serial.begin(9600); // // Serial Communication is starting with 9600 of baudrate speed
   
 }
+/**
+	check if obstacle in front of sensor1
+**/
 bool obscheck() {
   // Clears the trigPin condition
   digitalWrite(trigPin, LOW);
@@ -61,6 +66,9 @@ bool obscheck() {
   }
 
 }
+/**
+	check if obstacle in front of sensor2
+**/
 bool obscheck2(){
   digitalWrite(trigPin2, LOW);
   delayMicroseconds(2);

@@ -11,125 +11,61 @@
 #include "LineDetectionControl.hpp"
 #include "Headers/IR_Avoidance.hpp"
 
-bool headingNorth = true;
+bool headingNorth = true;	//Direction robot is currently heading
 void setup(){
   Serial.begin(9600);
-  setupMotorControl();
-  setupLineDetector();
-  ultaobssetup();
-  //LRObsSensorssetup();
+  setupMotorControl();	//enable motor control
+  setupLineDetector();	//enable line detection
+  ultaobssetup();	//enable ultrasonic sensors
 	
 }
+/**
+Main loop where control flow for robot is located
+**/
 void loop(){
   
-  forward(17,1);
-//   //delay(1000);
-  if(obscheck2()||obscheck()||checkObstacleIR()){
-    Serial.println("detected");
+  forward(17,1);	
+	//Poll obstacle avoidance sensors
+  if(obscheck2()||obscheck()||checkObstacleIR()){	//if obstacle
     stop();
-
-    //onObstacleDetected(headingNorth);
-    //obsDetected2();
-    avoidOBS();
+    avoidOBS();	//obstacle avoidance logic
   }
    int cl = checkLine();
 
-  if(cl == 1){
+  if(cl == 1){	//poll line detection
    Serial.println("onLine");
-	 onEdgeDetected();
-   headingNorth = !headingNorth;
+	 onEdgeDetected();	//edge detected logic
+	 headingNorth = !headingNorth;	//now going other direction
    }
 
 
  }
 void avoidOBS(){
 
-if(headingNorth){
-  //it is going to north)
-  left(17,1);
-  delay(TURN_TIME);
+	if(headingNorth){	//Turn left and go forward until past object then turn right
+		
+	  left(17,1);
+	  delay(TURN_TIME);
 
-  forward(17,1);
-  delay(FORWARD);
+	  forward(17,1);
+	  delay(FORWARD);
 
-  right(17,1);
-  delay(TURN_TIME);
-}else{
-//IF IT IS GOING SOUTH
-  right(17,1);
-  delay(TURN_TIME);
+	  right(17,1);
+	  delay(TURN_TIME);
+	}else{	//Turn right and go forward until past object then turn left
 
-  forward(17,0.8);
-  delay(FORWARD);
+	  right(17,1);
+	  delay(TURN_TIME);
 
-  left(17,0.8);
-  delay(TURN_TIME);
+	  forward(17,0.8);
+	  delay(FORWARD);
+
+	  left(17,0.8);
+	  delay(TURN_TIME);
+	}
+
+
 }
 
-
- }
-// void obsDetected2(){
-//   int l =1;
-//   int r=0;
-
-//   l=sensors[0].read();
-//   r=sensors[1].read(); 
- 
-//   if(r>l){
-    
-//     right(17,0.8);
-//     delay(1000);
-//     //counter = counter + 1;
- 
-//     //counter++; c1
-
-//      l=sensors[0].read();
-//      Serial.print("sensor 0");
-//      Serial.println(sensors[0].read());
-//      Serial.print("sensor 1");
-//      Serial.println(sensors[1].read());
-//      while(l<100){
-//       //  Serial.println(sensors[0].read());
-//       //   Serial.println(sensors[1].read());
-//        forward(17, 0.8);
-//        stop();
-//        l=sensors[0].read();
-//         Serial.println("sensor:");
-//   Serial.println(l);
-//      }
-
-//      forward(17, 0.8);
-//      delay(2000);
-//      stop();
-
-//      left(17,0.8);
-//      //counter = counter - 1;
-//      }
-
-//      else{
-//        left(17,0.8);
-//       // counter = counter - 1;
-//        r=sensors[1].read();
-//        while(r<100){
-//        forward(17, 0.8);
-//        stop();
-//        r=sensors[1].read();
-//        Serial.print("sensor 0");
-//        Serial.println(sensors[0].read());
-//        Serial.print("sensor 1");
-//        Serial.println(sensors[1].read());
-
-//      }
-
-//      forward(17, 0.8);
-//      delay(2000);
-//      stop();
-
-//      right(17,0.8);
-//     // counter = counter - 1;
-//        }
-
-
-// }
 
 #endif
